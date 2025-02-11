@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ntomas-a <ntomas-a@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ntomas-a <ntomas-a@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 02:47:04 by ntomas-a          #+#    #+#             */
-/*   Updated: 2025/01/28 02:47:04 by ntomas-a         ###   ########.fr       */
+/*   Updated: 2025/02/11 05:33:07 by ntomas-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,5 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include "Libft/libft.h"
-# include "Printf/ft_printf.h"
 
 #endif
