@@ -46,27 +46,40 @@ int	ft_atoi(const char *str)
 	return (res * sign);
 }
 
-void	signal_action(int pid, char *str)
+void signal_action(int pid, char *str)
 {
-	int	i;
-	int	c;
-
-	while (*str)
-	{
-		i = 0;
-		c = *str;
-		while (i < 8)
-		{
-			if (c & 0b10000000)
-				kill(pid, SIGUSR1);
-			else
-				kill(pid, SIGUSR2);
-			usleep(100);
-			c = c << 1;
-			i++;
-		}
-		str++;
-	}
+    int i;
+    int c;
+    
+    while (*str)
+    {
+        i = 0;
+        c = *str;
+        while (i < 8)
+        {
+            if (c & 0b10000000)
+                kill(pid, SIGUSR1);
+            else
+                kill(pid, SIGUSR2);
+            usleep(100);
+            c = c << 1;
+            i++;
+        }
+        str++;
+    }
+    
+    c = '\n';
+    i = 0;
+    while (i < 8)
+    {
+        if (c & 0b10000000)
+            kill(pid, SIGUSR1);
+        else
+            kill(pid, SIGUSR2);
+        usleep(100);
+        c = c << 1;
+        i++;
+    }
 }
 
 int	main(int ac, char **av)

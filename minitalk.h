@@ -13,7 +13,7 @@
 #ifndef MINITALK_H
 # define MINITALK_H
 
-# include <bits/types/siginfo_t.h>
+//# include <bits/types/siginfo_t.h>
 # include <signal.h>
 # include <stdio.h>
 # include <unistd.h>
