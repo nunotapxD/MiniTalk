@@ -6,7 +6,7 @@
 /*   By: ntomas-a <ntomas-a@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 03:24:55 by ntomas-a          #+#    #+#             */
-/*   Updated: 2025/01/28 03:24:55 by ntomas-a         ###   ########.fr       */
+/*   Updated: 2025/03/06 00:00:00 by ntomas-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	handler(int sig)
 	if (sig == SIGUSR2)
 		c = c << 1;
 	else if (sig == SIGUSR1)
-		c = (c << 1) | 0b00000001;
+		c = (c << 1) | 1;
 	i++;
 	if (i == 8)
 	{
@@ -63,11 +63,18 @@ void	handler(int sig)
 
 int	main(void)
 {
+	struct sigaction	sa;
+
 	ft_putstr("Server PID: ");
 	ft_putnbr(getpid());
 	write(1, "\n", 1);
-	signal(SIGUSR1, handler);
-	signal(SIGUSR2, handler);
+	
+	sa.sa_handler = handler;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
+	
 	while (1)
 		pause();
 	return (0);
