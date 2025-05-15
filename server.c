@@ -12,37 +12,6 @@
 
 #include "minitalk.h"
 
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
-void	ft_putstr(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		write(1, &s[i++], 1);
-}
-
-void	ft_putnbr(int n)
-{
-	if (n == -2147483648)
-	{
-		write(1, "-2147483648", 11);
-		return ;
-	}
-	if (n < 0)
-	{
-		write(1, "-", 1);
-		n = -n;
-	}
-	if (n > 9)
-		ft_putnbr(n / 10);
-	ft_putchar(n % 10 + '0');
-}
-
 void	handler(int sig)
 {
 	static int				i = 0;
@@ -51,11 +20,11 @@ void	handler(int sig)
 	if (sig == SIGUSR2)
 		c = c << 1;
 	else if (sig == SIGUSR1)
-		c = (c << 1) | 1;
+		c = (c << 1) | 0b00000001;
 	i++;
 	if (i == 8)
 	{
-		write(1, &c, 1);
+		ft_printf("%c", c);
 		i = 0;
 		c = 0;
 	}
@@ -63,19 +32,11 @@ void	handler(int sig)
 
 int	main(void)
 {
-	struct sigaction	sa;
-
-	ft_putstr("Server PID: ");
-	ft_putnbr(getpid());
-	write(1, "\n", 1);
-	
-	sa.sa_handler = handler;
-	sa.sa_flags = 0;
-	sigemptyset(&sa.sa_mask);
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
-	
+	ft_printf("PID do servidor: %d\n", getpid());
+	signal(SIGUSR1, handler);
+	signal(SIGUSR2, handler);
 	while (1)
-		pause();
+	{
+	}
 	return (0);
 }

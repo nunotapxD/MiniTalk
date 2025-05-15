@@ -10,31 +10,41 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = client server
+LIBFT = Libft/libft.a
+PRINTF = Printf/libftprintf.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CCFLAGS = cc -Wall -Werror -Wextra
 
-SRC_CLIENT = client.c
-SRC_SERVER = server.c
+SERVER = server
+CLIENT = client
+SRCS_SERVER = server.c
+SRCS_CLIENT = client.c
 
-OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
-OBJ_SERVER = $(SRC_SERVER:.c=.o)
+OBJS_SERVER = $(SRCS_SERVER:.c=.o)
+OBJS_CLIENT = $(SRCS_CLIENT:.c=.o)
 
-all: $(NAME)
 
-client: $(OBJ_CLIENT)
-	$(CC) $(CFLAGS) $(OBJ_CLIENT) -o client
+all: $(SERVER) $(CLIENT)
 
-server: $(OBJ_SERVER)
-	$(CC) $(CFLAGS) $(OBJ_SERVER) -o server
+$(SERVER) $(CLIENT): $(OBJS_SERVER) $(OBJS_CLIENT) $(LIBFT) $(PRINTF)
+		${CCFLAGS} ${OBJS_SERVER} Libft/libft.a Printf/libftprintf.a -o ${SERVER}
+		${CCFLAGS} ${OBJS_CLIENT} Libft/libft.a Printf/libftprintf.a -o ${CLIENT}
 
-clean:
-	rm -f $(OBJ_CLIENT) $(OBJ_SERVER)
+$(LIBFT):
+		make -C Libft/
 
-fclean: clean
-	rm -f client server
+$(PRINTF):
+		make -C Printf/
 
-re: fclean all
+clean:	
+		make clean -C Libft/
+		make clean -C Printf/
+		rm -rf ${OBJS_SERVER} ${OBJS_CLIENT} 
+		
+fclean:	clean
+		make fclean -C Libft/
+		make fclean -C Printf/
+		rm -rf $(SERVER) $(CLIENT)
 
-.PHONY: all clean fclean re
+re:	fclean all
